@@ -36,11 +36,11 @@ namespace Tevian
 				: QWidget(parent)
 		{
 			setVisible(true);
-			initControls(renderer, api);
+			initControls(renderer);
 			setBackgroundRole(QPalette::ColorRole::Shadow);
 		}
 		
-		void Controls::initControls(DetectionRenderer* renderer, Client::FaceApi* api)
+		void Controls::initControls(DetectionRenderer* renderer)
 		{
 			auto mainGroup = new QGroupBox(this);
 			setFixedWidth(300);

@@ -49,7 +49,7 @@ namespace Tevian
 		
 		private:
 			
-			void initControls(DetectionRenderer* renderer, Client::FaceApi* api);
+			void initControls(DetectionRenderer* renderer);
 			
 			/**
 			 * \brief Init api data.

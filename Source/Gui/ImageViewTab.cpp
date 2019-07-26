@@ -42,7 +42,7 @@ namespace Tevian
 				  m_scene { new QGraphicsScene(this) }
 		{
 			setVisible(false);
-			auto faceApi = new Client::FaceApi(DOMAIN, API_PATH);
+			auto faceApi = new Client::FaceApi(TBACKEND, API_PATH);
 			m_faceDetector = new FaceDetector(m_file, faceApi);
 			QImageReader reader(m_file);
 			reader.setAutoTransform(true);
@@ -94,9 +94,9 @@ namespace Tevian
 		void ImageViewTab::initActions(QLayout* layout)
 		{
 			auto toolBar = new QToolBar(this);
+			toolBar->setOrientation(Qt::Orientation::Horizontal);
 			toolBar->setForegroundRole(QPalette::ColorRole::Dark);
 			m_actionTable = { };
-			
 			auto zoomInAct = m_scaling->addAction(Scaling::In,
 			                                      toolBar->addAction(QIcon::fromTheme("image-zoom-in"),
 			                                                         tr("Zoom &In (%1)").arg(m_scaling->caption()),
@@ -129,7 +129,6 @@ namespace Tevian
 			m_scaling->addComboAction(zoomFitAct);
 			m_scaling->addComboAction(zoomResetAct);
 			
-			toolBar->addWidget(m_scaling->zoomBox());
 			toolBar->addAction(zoomOutAct);
 			toolBar->addSeparator();
 			
@@ -214,6 +213,5 @@ namespace Tevian
 		
 	}// namespace Gui
 }// namespace Tevian
-
 
 #include <Gui/moc_ImageViewTab.cpp>

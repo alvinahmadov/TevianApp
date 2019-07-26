@@ -57,6 +57,7 @@ namespace Tevian
 			bool setDetector(FaceDetector* detector)
 			{
 				m_faceDetector = detector;
+				return m_faceDetector != nullptr;
 			}
 		
 		public slots:

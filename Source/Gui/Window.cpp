@@ -21,11 +21,7 @@
 #include <QApplication>
 #include <QDialog>
 #include <QMessageBox>
-#include <QCommonStyle>
 #include <QProgressBar>
-
-#include <QDebug>
-
 
 namespace Tevian
 {
@@ -81,6 +77,8 @@ namespace Tevian
 				  m_imgBook(new ImageBook(this)),
 				  m_progressBar(new QProgressBar())
 		{
+			
+			setCentralWidget(m_imgBook);
 			init();
 		}
 		
@@ -174,44 +172,12 @@ namespace Tevian
 			delete dialog;
 		}
 		
-		/*
-		// bool Window::save(const QString& fileName)
-		// {
-		// 	Q_UNUSED(fileName)
-		QImageWriter writer(fileName);
-
-		if (!writer.write(*m_images.top()))
-		{
-			QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
-									 tr("Cannot write %1: %2")
-											 .arg(QDir::toNativeSeparators(fileName)), writer.errorString());
-			return false;
-		}
-
-		if (m_enableStatusbar)
-		{
-			const QString message = tr("Wrote \"%1\"").arg(QDir::toNativeSeparators(fileName));
-			statusBar()->showMessage(message);
-		}
-
-		return true;
-		
-		// 	return true;
-		// }
-		//
-		*/
-		
 		void Window::init()
 		{
-			setCentralWidget(m_imgBook);
 			auto toolbar = new QToolBar(this);
-			m_imgBook->setVisible(false);
-			toolbar->setFixedHeight(size().height() / 9);
 			toolbar->setIconSize(QSize(24, 24));
 			toolbar->layout()->setSpacing(20);
-			toolbar->setMovable(false);
 			addToolBar(toolbar);
-			m_imgBook->hide();
 			m_progressBar->hide();
 			m_progressBar->setFixedSize(500,100);
 			m_progressBar->setWindowModality(Qt::ApplicationModal);
@@ -223,42 +189,57 @@ namespace Tevian
 			// Initialize buttons
 			// Open files
 			auto openBtn = new QToolButton(this);
+			#ifndef _WIN32
 			openBtn->setIcon(QIcon::fromTheme("image-x-generic"));
+			#else
+			openBtn->setText("Open");
+			#endif
 			openBtn->setToolTip("Open files");
 			openBtn->setShortcut(tr("Ctrl+O"));
 			toolbar->addWidget(openBtn);
 			
 			// Open directory
 			auto openDirBtn = new QToolButton(this);
+			
+			#ifndef _WIN32
 			openDirBtn->setIcon(QIcon::fromTheme("folder-open"));
+			#else
+			openDirBtn->setText("Open Directory");
+			#endif
 			openDirBtn->setToolTip(tr("Open Directory"));
 			openDirBtn->setShortcut(tr("Ctrl+Shift+O"));
 			toolbar->addWidget(openDirBtn);
 			
-			// Save
-			auto saveBtn = new QToolButton(this);
-			saveBtn->setIcon(QIcon::fromTheme("document-save"));
-			saveBtn->setToolTip(tr("Save"));
-			saveBtn->setShortcut(tr("Ctrl+Shift+S"));
-			toolbar->addWidget(saveBtn);
 			
 			// Settings
 			auto settingsBtn = new QToolButton(this);
+			#ifndef _WIN32
 			settingsBtn->setIcon(QIcon::fromTheme("settings"));
+			#else
+			settingsBtn->setText("Preferences");
+			#endif
 			settingsBtn->setToolTip(tr("Preferences"));
 			settingsBtn->setShortcut(tr("Alt+S"));
 			toolbar->addWidget(settingsBtn);
 			
 			// About
 			auto aboutBtn = new QToolButton(this);
-			aboutBtn->setIcon(QIcon::fromTheme("help"));
+			#ifndef _WIN32
+			aboutBtn->setIcon(QIcon::fromTheme("Info"));
+			#else
+			aboutBtn->setText("Preferences");
+			#endif
 			aboutBtn->setToolTip(tr("Help"));
 			aboutBtn->setShortcut(tr("Ctrl+F1"));
 			toolbar->addWidget(aboutBtn);
 			
 			// Quit
 			auto exitBtn = new QToolButton(this);
+			#ifndef _WIN32
 			exitBtn->setIcon(QIcon::fromTheme("exit"));
+			#else
+			exitBtn->setText("Quit");
+			#endif
 			exitBtn->setToolTip(tr("Quit"));
 			exitBtn->setShortcut(tr("Ctrl+Q"));
 			toolbar->addWidget(exitBtn);
