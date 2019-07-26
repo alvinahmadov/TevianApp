@@ -5,6 +5,7 @@
 #pragma once
 
 
+#include "Defines.hpp"
 #include <memory>
 
 #include <QSettings>
@@ -16,7 +17,7 @@ namespace Tevian
 	struct LoginData;
 	
 	/// As a singleton
-	class Settings : public QSettings
+	class TEVIAN_API Settings : public QSettings
 	{
 	Q_OBJECT
 	private:

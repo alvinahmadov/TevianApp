@@ -96,8 +96,7 @@ namespace Tevian
 			QByteArray
 			getToken() const;
 		
-		protected slots:
-			
+		protected:
 			void authorize(QNetworkReply* = nullptr, QAuthenticator* = nullptr);
 		
 		private:

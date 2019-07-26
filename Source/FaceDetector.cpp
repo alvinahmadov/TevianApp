@@ -177,7 +177,7 @@ namespace Tevian
 			m_faceApi = api;
 		} else
 		{
-			m_faceApi = new Client::FaceApi(QString(DOMAIN), QString(API_PATH));
+			m_faceApi = new Client::FaceApi(QString(TBACKEND), QString(API_PATH));
 		}
 		
 		m_faceApi->login(FaceApi::Token);

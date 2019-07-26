@@ -76,46 +76,6 @@ namespace Tevian
 			}
 		}
 		
-		struct LessPoint
-				: public std::binary_function<QPoint, QPoint, bool>
-		{
-			Q_INLINE_TEMPLATE Q_CONSTEXPR
-			bool operator()(const QPoint& p1, const QPoint& p2) const
-			{
-				return (p1 < p2);
-			}
-		};
-		
-		struct LessEqualPoint
-				: public std::binary_function<QPoint, QPoint, bool>
-		{
-			Q_INLINE_TEMPLATE Q_CONSTEXPR
-			bool operator()(const QPoint& p1, const QPoint& p2) const
-			{
-				return (p1 <= p2);
-			}
-		};
-		
-		struct GreaterPoint
-				: public std::binary_function<QPoint, QPoint, bool>
-		{
-			Q_CONSTEXPR Q_INLINE_TEMPLATE
-			bool operator()(const QPoint& p1, const QPoint& p2) const
-			{
-				return (p1 > p2);
-			}
-		};
-		
-		struct GreaterEqualPoint
-				: public std::binary_function<QPoint, QPoint, bool>
-		{
-			Q_CONSTEXPR Q_INLINE_TEMPLATE
-			bool operator()(const QPoint& p1, const QPoint& p2) const
-			{
-				return (p1 >= p2);
-			}
-		};
-		
 		void pointSort(const QVector<QPoint>& in, QVector<QPoint>& out);
 	}
 	

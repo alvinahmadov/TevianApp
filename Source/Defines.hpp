@@ -7,7 +7,7 @@
 #define PROJECT_VERSION  "1.0.0"
 
 #define ORGANIZATION    "None"
-#define DOMAIN          "https://backend.facecloud.tevian.ru"
+#define TBACKEND          "https://backend.facecloud.tevian.ru"
 #define API_PATH         "/api/v1/openapi.json"
 #define PROJECT_NAME    "TevianTask"
 
@@ -78,9 +78,6 @@
 #define printc(str)
 #define printl(str)
 #define printl_fmt(str, ios_fmt)
-#define prints_debug(str, args...)
-#define printl_debug(str, args...)
-#define printf_debug(str, ...)
 #define printlw(str)
 #define printlc(str)
 #define printf_(str)

@@ -21,8 +21,6 @@ namespace Tevian
 				  m_token { },
 				  m_header { header }
 		{
-			connect(manager(), SIGNAL(authenticationRequired(QNetworkReply * , QAuthenticator * )),
-			        this, SLOT(authorize(QNetworkReply * , QAuthenticator * )));
 		}
 		
 		AuthorizationHandler::~AuthorizationHandler()
@@ -123,6 +121,7 @@ namespace Tevian
 				setRequiresAuth(true);
 				m_loggedIn = true;
 			}
+			return *this;
 		}
 		
 		QByteArray

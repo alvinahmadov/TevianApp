@@ -156,6 +156,8 @@ namespace Tevian
 			
 			Triple m_triple;
 			
+			Q_DISABLE_COPY(FaceApi)
+			
 		};
 	}// namespace Client
 }// namespace Tevian

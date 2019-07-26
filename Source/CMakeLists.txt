@@ -8,14 +8,21 @@ list(APPEND ${TEVIAN_BASE_LIB}_SOURCE_FILES
      ${TEVIAN_SOURCE_DIR}/AuthorizationHandler.cpp
      )
 
+if(MINGW)
+    list(APPEND CMAKE_PREFIX_PATH "C:\\Dev\\Qt\\5.12.4\\mingw73_64")
+endif()
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 
-
-# Build it as a shared only
-add_library(${TEVIAN_BASE_LIB} SHARED ${${TEVIAN_BASE_LIB}_SOURCE_FILES} FaceData.hpp)
+#
+if(WIN32) #I hate WIN32
+    add_library(${TEVIAN_BASE_LIB} ${${TEVIAN_BASE_LIB}_SOURCE_FILES})
+else()
+    add_library(${TEVIAN_BASE_LIB} SHARED ${${TEVIAN_BASE_LIB}_SOURCE_FILES})
+endif(WIN32)
 
 # Default include dir
 target_include_directories(${TEVIAN_BASE_LIB} PUBLIC ${TEVIAN_SOURCE_DIR})
@@ -36,8 +43,6 @@ set_target_properties(
         PROPERTIES
         # Enable moc compilation for base library.
         AUTOMOC ON
-        # Build all moc generated files in Build/<CONFIG>/Autogen directory.
-        AUTOGEN_BUILD_DIR ${CMAKE_BINARY_DIR}/Autogen
         # Put all built runtime files to exe's build directory.
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
