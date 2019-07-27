@@ -6,7 +6,6 @@
 
 #include "Gui/DetectionRenderer.hpp"
 
-#include <QDebug>
 #include <QPainter>
 #include <QMouseEvent>
 #include <QStaticText>

@@ -6,9 +6,6 @@
 
 
 #include <QDialog>
-#include <QSettings>
-#include <QtWidgets/QLineEdit>
-
 
 class QTabWidget;
 

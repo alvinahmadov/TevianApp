@@ -16,7 +16,6 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QGroupBox>
-#include <QDebug>
 #include <QSlider>
 #include <QLabel>
 #include <QLineEdit>

@@ -6,7 +6,6 @@
 
 #include "Gui/ViewPort.hpp"
 
-#include <QDebug>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QScrollBar>

@@ -10,7 +10,6 @@
 #include <iostream>
 
 #include <QString>
-#include <QDebug>
 
 
 namespace Tevian

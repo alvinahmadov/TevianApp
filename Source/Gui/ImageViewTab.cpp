@@ -22,7 +22,6 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QGraphicsTextItem>
-#include <QDebug>
 #include <QGraphicsSimpleTextItem>
 
 

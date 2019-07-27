@@ -4,7 +4,6 @@
  */
 #include "Settings.hpp"
 #include <memory>
-#include <QDebug>
 
 
 namespace Tevian

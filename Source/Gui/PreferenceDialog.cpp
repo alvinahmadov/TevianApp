@@ -13,8 +13,6 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QFormLayout>
-#include <QDebug>
-#include <QStackedLayout>
 
 
 namespace Tevian

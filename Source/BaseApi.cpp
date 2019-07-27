@@ -8,7 +8,6 @@
 #include "BaseApi.hpp"
 
 #include <QNetworkAccessManager>
-#include <QDebug>
 #include <QEventLoop>
 #include <QTimer>
 #include <QException>

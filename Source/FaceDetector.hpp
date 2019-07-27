@@ -11,7 +11,6 @@
 #include "Commons.hpp"
 #include "FaceApi.hpp"
 #include "Settings.hpp"
-#include <QDebug>
 
 #include <QHash>
 #include <QRect>
