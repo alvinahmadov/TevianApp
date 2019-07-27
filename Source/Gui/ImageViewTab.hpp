@@ -10,7 +10,6 @@
 #include "Gui/Controls.hpp"
 
 #include <QWidget>
-#include <QtGui/QStaticText>
 
 
 class QToolButton;
