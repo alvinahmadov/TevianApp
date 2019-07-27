@@ -60,8 +60,30 @@ namespace Tevian
 		/**
 		 * Find maximum and minimum points
 		 * */
-		const QVector<QPoint>
-		minmax4D(QVector<QPoint>& points);
+		QVector<QPoint>
+		minmax4D(const QVector<QPoint>& points);
+		
+		inline qreal
+		rectArea(const QVector<QPoint>& points)
+		{
+			auto width = qAbs(points.at(1).x() - points.at(0).x());
+			auto height = qAbs(points.at(1).y() - points.at(3).y());
+			return width * height;
+		}
+		
+		inline qreal
+		rectHeight(const QVector<QPoint>& points)
+		{
+			auto width = qAbs(points.at(1).x() - points.at(0).x());
+			return width;
+		}
+		
+		inline qreal
+		rectWidth(const QVector<QPoint>& points)
+		{
+			auto height = qAbs(points.at(1).y() - points.at(3).y());
+			return height;
+		}
 		
 		Q_CONSTEXPR inline
 		const QPoint&

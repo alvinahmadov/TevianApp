@@ -30,39 +30,6 @@ namespace Tevian
 		/// FaceDetector parameters
 		
 		/**
-		 * Ethnicity parameter for
-		 * demographics option.
-		 */
-		enum class Ethnicity
-		{
-			Unknown,
-			Caucasian,
-			Mongoloid,
-			Negroid,
-			EastAsian
-		};
-		
-		QString ethnicityToStr(Ethnicity ethnicity);
-		
-		Ethnicity stringToEthnicity(QString ethnicity);
-		
-		/**
-		 * Gender parameter for
-		 * demographics option.
-		 */
-		enum class Gender
-		{
-			Male,
-			Female,
-			Unknown
-		};
-		
-		QString genderToStr(Gender gender);
-		
-		Gender stringToGender(QString ethnicity);
-		
-		
-		/**
 		 * \brief Used to save parameters like the
 		 * number and the values of landmark keys,
 		 * face bounding box coordinates.
@@ -84,35 +51,45 @@ namespace Tevian
 		struct Demographics
 		{
 			explicit Demographics(qreal mean = 0.0, qreal variance = 0.0,
-			                      Gender gender = Gender::Unknown,
-			                      Ethnicity ethnicity = Ethnicity::Unknown) Q_DECL_NOEXCEPT;
+			                      QString gender = QString(),
+			                      QString ethnicity = QString()) Q_DECL_NOEXCEPT;
+			
 			
 			//! Ethnicity of person
-			Ethnicity _ethnicity;
+			QString _ethnicity;
 			
 			//! Gender of person
-			Gender _gender;
+			QString _gender;
 			
 			//! id number of person.
 			//! Must be unique
 			static quint16 _id;
 			
 			//! Age of detected person
-			union Age
+			struct Age
 			{
-				qreal mean;
-				qreal variance;
+				Age(qreal mean = 0.0, qreal variance = 0.0)
+						:
+						_mean { mean },
+						_variance { variance }
+				{ }
+				
+				qreal _mean;
+				
+				qreal _variance;
 			} _age;
 			
 			inline QString getEthnicity() const
 			{
-				return ethnicityToStr(_ethnicity);
+				return _ethnicity;
 			}
 			
 			inline QString getGender() const
 			{
-				return genderToStr(_gender);
+				return _gender;
 			}
+			
+			QString getAsText() const;
 		};
 		
 		using Attributes = std::unordered_map<std::string, std::string>;
@@ -179,7 +156,7 @@ namespace Tevian
 		 * landmarks disabled or fetch not called first.
 		 * */
 		const QVector<QPoint>&
-		getLandmarks();
+		getLandmarks() const;
 		
 		const std::array<int, 4>&
 		getBox() const;

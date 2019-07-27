@@ -13,9 +13,16 @@ namespace Tevian
 			Settings::m_instance { };
 	
 	Settings::Settings(QObject* parent)
-			: QSettings(parent)
+			: QSettings(parent),
+			  m_loginData { new LoginData },
+			  m_backendData { new BackendData }
 	{
-		m_loginData = new LoginData();
+	}
+	
+	Settings::~Settings()
+	{
+		delete m_loginData;
+		delete m_backendData;
 	}
 	
 	Settings*
@@ -81,6 +88,16 @@ namespace Tevian
 		}
 	}
 	
+	void Settings::setBackendUrl(const QString& backend)
+	{
+		m_backendData->m_url = backend;
+	}
+	
+	void Settings::setApiPath(const QString& path)
+	{
+		m_backendData->m_apiPath = path;
+	}
+	
 	void Settings::setEmail(const QString& email)
 	{
 		m_loginData->m_email = email;
@@ -104,6 +121,25 @@ namespace Tevian
 			m_loginData->m_email = get(Key::Email).toString();
 		}
 		return m_loginData->m_email;
+	}
+	
+	QString Settings::url()
+	{
+		if (m_backendData->m_url.isEmpty())
+		{
+			m_backendData->m_url = get(Key::ApiUrl).toString();
+		}
+		return m_backendData->m_url;
+	}
+	
+	QString Settings::path()
+	{
+		
+		if (m_backendData->m_apiPath.isEmpty())
+		{
+			m_backendData->m_apiPath = get(Key::ApiPath).toString();
+		}
+		return m_backendData->m_apiPath;
 	}
 	
 	QString
@@ -140,6 +176,16 @@ namespace Tevian
 		if (!m_loginData->m_token.isEmpty())
 		{
 			set(Key::Token, m_loginData->m_token);
+		}
+		
+		if (!m_backendData->m_url.isEmpty())
+		{
+			set(Key::ApiUrl, m_backendData->m_url);
+		}
+		
+		if (!m_backendData->m_apiPath.isEmpty())
+		{
+			set(Key::ApiPath, m_backendData->m_apiPath);
 		}
 		
 		sync();

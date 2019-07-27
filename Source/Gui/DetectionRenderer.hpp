@@ -57,6 +57,10 @@ namespace Tevian
 			
 			QSize sizeHint() const Q_DECL_OVERRIDE;
 			
+			QPoint center() const;
+			
+			qreal area();
+			
 			qreal realPenWidth() const;
 			
 			void setRealPenWidth(qreal penWidth);
@@ -66,8 +70,6 @@ namespace Tevian
 			void setBox(const std::array<int, 4>& bbox);
 			
 			void setBox(const QRect& bbox);
-			
-			void setDemographics(const Details::Demographics& demographics);
 			
 			bool cleared();
 		

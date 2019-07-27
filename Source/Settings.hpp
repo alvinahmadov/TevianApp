@@ -15,6 +15,7 @@
 namespace Tevian
 {
 	struct LoginData;
+	struct BackendData;
 	
 	/// As a singleton
 	class TEVIAN_API Settings : public QSettings
@@ -42,6 +43,8 @@ namespace Tevian
 			Token
 		};
 		
+		~Settings() Q_DECL_OVERRIDE;
+		
 		static Settings*
 		getSettingsManager(QObject* parent = nullptr);
 		
@@ -59,6 +62,10 @@ namespace Tevian
 		
 		QString email();
 		
+		QString url();
+		
+		QString path();
+		
 		QString password();
 		
 		QByteArray token();
@@ -66,6 +73,10 @@ namespace Tevian
 		void save();
 	
 	public slots:
+		
+		void setBackendUrl(const QString& backend);
+		
+		void setApiPath(const QString& path);
 		
 		void setEmail(const QString& email);
 		
@@ -84,6 +95,8 @@ namespace Tevian
 		std::unique_ptr<Settings> m_instance;
 		
 		LoginData* m_loginData;
+		
+		BackendData* m_backendData;
 	};
 	
 	struct LoginData
@@ -93,6 +106,12 @@ namespace Tevian
 		QString m_password;
 		
 		QByteArray m_token;
+	};
+	
+	struct BackendData
+	{
+		QString m_url;
+		QString m_apiPath;
 	};
 	
 	static Settings* g_settingsManager = Settings::getSettingsManager();

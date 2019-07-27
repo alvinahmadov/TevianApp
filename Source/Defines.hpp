@@ -7,8 +7,8 @@
 #define PROJECT_VERSION  "1.0.0"
 
 #define ORGANIZATION    "None"
-#define TBACKEND          "https://backend.facecloud.tevian.ru"
-#define API_PATH         "/api/v1/openapi.json"
+#define BACKEND_URL     "https://backend.facecloud.tevian.ru"
+#define API_PATH        "/api/v1/openapi.json"
 #define PROJECT_NAME    "TevianTask"
 
 #define TEVIAN_EXPORT

@@ -128,6 +128,16 @@ namespace Tevian
 			return image()->size();
 		}
 		
+		QPoint DetectionRenderer::center() const
+		{
+			return QPoint(sizeHint().width() / 2, sizeHint().height() / 2);
+		}
+		
+		qreal DetectionRenderer::area()
+		{
+			return sizeHint().width() * sizeHint().height();
+		}
+		
 		qreal DetectionRenderer::realPenWidth() const
 		{
 			return m_penWidth;
@@ -165,19 +175,6 @@ namespace Tevian
 			m_bbox1 = {
 					bbox.x(), bbox.y(), bbox.width(), bbox.height()
 			};
-		}
-		
-		void DetectionRenderer::setDemographics(const Details::Demographics& demographics)
-		{
-			clearText();
-			
-			auto staticText = tr("Age mean: %1, Age variance: %2, Ethnicity: %3, Gender: %4")
-					.arg(demographics._age.mean)
-					.arg(demographics._age.variance)
-					.arg(demographics.getEthnicity())
-					.arg(demographics.getGender());
-			
-			setStaticText(staticText);
 		}
 		
 		bool DetectionRenderer::cleared()

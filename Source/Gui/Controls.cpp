@@ -31,13 +31,17 @@ namespace Tevian
 	{
 		using RadioPair = std::pair<QRadioButton*, QRadioButton*>;
 		
-		Controls::Controls(QWidget* parent, DetectionRenderer* renderer,
-		                   Client::FaceApi* api)
+		Controls::Controls(QWidget* parent, DetectionRenderer* renderer)
 				: QWidget(parent)
 		{
 			setVisible(true);
 			initControls(renderer);
 			setBackgroundRole(QPalette::ColorRole::Shadow);
+		}
+		
+		QColor Controls::currentColor() const
+		{
+			return m_color;
 		}
 		
 		void Controls::initControls(DetectionRenderer* renderer)
@@ -50,6 +54,7 @@ namespace Tevian
 			
 			initDataGroup(mainGroup);
 			initStyleGroup(mainGroup, renderer);
+			initColorGroup(mainGroup);
 			
 			auto submitButton = new QPushButton(tr("Detect"), this);
 			auto clearButton = new QPushButton(tr("Clear"), this);
@@ -59,10 +64,10 @@ namespace Tevian
 			mainLayout->addWidget(mainGroup);
 			
 			auto mainGroupLayout = new QVBoxLayout(mainGroup);
-			mainGroupLayout->setMargin(3);
 			
 			mainGroupLayout->addWidget(m_dataGroup);
 			mainGroupLayout->addWidget(m_styleGroup);
+			mainGroupLayout->addWidget(m_colorGroup);
 			
 			auto buttonLayout = new QHBoxLayout();
 			buttonLayout->addWidget(submitButton);
@@ -136,6 +141,43 @@ namespace Tevian
 			
 			landmarksCheck->setChecked(true);
 			demographicsCheck->setChecked(true);
+		}
+		
+		void Controls::initColorGroup(QWidget* parent)
+		{
+			
+			m_colorGroup = new QGroupBox(parent);
+			QButtonGroup* bg = new QButtonGroup(m_colorGroup);
+			auto colorWhite = new QCheckBox("White");
+			auto colorDark = new QCheckBox("Black");
+			bg->addButton(colorWhite);
+			bg->addButton(colorDark);
+			m_colorGroup->setTitle(tr("Text Color"));
+			
+			// Set Layout:
+			auto styleGroupLayout = new QVBoxLayout(m_colorGroup);
+			styleGroupLayout->addWidget(colorWhite);
+			styleGroupLayout->addWidget(colorDark);
+			// Connections:
+			connect(colorWhite, &QCheckBox::clicked, [ & ](bool clicked)
+			        {
+				        if (clicked)
+				        {
+					        m_color = QColor(Qt::white);
+				        }
+				
+			        }
+			);
+			connect(colorDark, &QCheckBox::clicked, [ & ](bool clicked)
+			        {
+				        if (clicked)
+				        {
+					        m_color = QColor(Qt::black);
+				        }
+				
+			        }
+			);
+			colorDark->setChecked(true);
 		}
 		
 		void Controls::initStyleGroup(QWidget* parent, DetectionRenderer* renderer)

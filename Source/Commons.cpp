@@ -35,8 +35,8 @@ namespace Tevian
 			
 		}
 		
-		const QVector<QPoint>
-		minmax4D(QVector<QPoint>& points)
+		QVector<QPoint>
+		minmax4D(const QVector<QPoint>& points)
 		{
 			auto start = points.at(points.size() - 1);
 			
@@ -84,7 +84,6 @@ namespace Tevian
 			
 			return range;
 		}
-		
 	}
 	
 	Exception::Exception() Q_DECL_NOEXCEPT

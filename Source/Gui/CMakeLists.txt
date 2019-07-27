@@ -26,7 +26,6 @@ set_target_properties(
         AUTOMOC ON
         # Make source directory to visible for moc compiler
         AUTOMOC_OPTIONS "-I ${TEVIAN_SOURCE_DIR}"
-        AUTOGEN_BUILD_DIR ${CMAKE_BINARY_DIR}/Autogen
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
 )
@@ -36,6 +35,6 @@ if(WIN32)
             TARGET ${TEVIAN_GUI_LIB} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy
             $<TARGET_FILE:${TEVIAN_GUI_LIB}>
-            $<TARGET_DIR:${CMAKE_RUNTIME_OUTPUT_DIRECTORY}>
+            ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     )
 endif()

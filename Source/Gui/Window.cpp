@@ -75,9 +75,9 @@ namespace Tevian
 		Window::Window(bool enable_statusbar)
 				: m_enableStatusbar { enable_statusbar },
 				  m_imgBook(new ImageBook(this)),
-				  m_progressBar(new QProgressBar())
+				  m_progressBar(new QProgressBar()),
+				  m_preferenceDialog(new PreferenceDialog(this, "Preferences"))
 		{
-			
 			setCentralWidget(m_imgBook);
 			init();
 		}
@@ -104,6 +104,22 @@ namespace Tevian
 		
 		void Window::open()
 		{
+			if (g_settingsManager->token().isEmpty() ||
+			    (g_settingsManager->email().isEmpty() || g_settingsManager->password().isEmpty()))
+			{
+				QMessageBox::information(this, tr("Authorization Required"),
+				                         tr("Please set email and password from settings on toolbar")
+				);
+				
+				if (g_settingsManager->url().isEmpty() || g_settingsManager->path().isEmpty())
+				{
+					g_settingsManager->setBackendUrl(BACKEND_URL);
+					g_settingsManager->setApiPath(API_PATH);
+				}
+				
+				return;
+			}
+			
 			auto dialog = new QFileDialog(this, tr("&Open File"));
 			dialog->setFileMode(QFileDialog::FileMode::ExistingFiles);
 			dialog->setViewMode(QFileDialog::ViewMode::Detail);
@@ -143,6 +159,22 @@ namespace Tevian
 		
 		void Window::openDirectory()
 		{
+			if (g_settingsManager->token().isEmpty() ||
+			    (g_settingsManager->email().isEmpty() || g_settingsManager->password().isEmpty()))
+			{
+				QMessageBox::information(this, tr("Authorization Required"),
+				                         tr("Please set email and password from settings on toolbar")
+				);
+				
+				if (g_settingsManager->url().isEmpty() || g_settingsManager->path().isEmpty())
+				{
+					g_settingsManager->setBackendUrl(BACKEND_URL);
+					g_settingsManager->setApiPath(API_PATH);
+				}
+				
+				return;
+			}
+			
 			auto dialog = new QFileDialog(this, tr("&Open Directory"));
 			dialog->setFileMode(QFileDialog::FileMode::DirectoryOnly);
 			dialog->setViewMode(QFileDialog::ViewMode::Detail);
@@ -225,9 +257,9 @@ namespace Tevian
 			// About
 			auto aboutBtn = new QToolButton(this);
 			#ifndef _WIN32
-			aboutBtn->setIcon(QIcon::fromTheme("Info"));
+			aboutBtn->setIcon(QIcon::fromTheme("help"));
 			#else
-			aboutBtn->setText("Preferences");
+			aboutBtn->setText("About");
 			#endif
 			aboutBtn->setToolTip(tr("Help"));
 			aboutBtn->setShortcut(tr("Ctrl+F1"));
@@ -254,17 +286,14 @@ namespace Tevian
 		
 		void Window::prefs()
 		{
-			PreferenceDialog* preferenceDialog = new PreferenceDialog(nullptr, "Preferences");
-			
-			preferenceDialog->show();
-			preferenceDialog->deleteLater();
+			m_preferenceDialog->show();
 		}
 		
 		void Window::about()
 		{
 			QMessageBox::about(this, tr("About Face Detector"),
 			                   tr("<p>The <b>Face Detector</b> program detects properties"
-			                      " of image like number"));
+			                      " of image."));
 		}
 	} // namespace Gui
 } // namespace Tevian

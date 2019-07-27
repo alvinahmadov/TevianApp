@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "Gui/ImageBook.hpp"
+#include "PreferenceDialog.hpp"
 
 #include <QMainWindow>
 #include <QMap>
@@ -55,6 +56,7 @@ namespace Tevian
 			
 			QProgressBar* m_progressBar;
 			
+			PreferenceDialog* m_preferenceDialog;
 		};
 	}// namespace Gui
 }// namespace Tevian

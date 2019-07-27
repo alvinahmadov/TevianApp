@@ -21,6 +21,8 @@ class QGridLayout;
 
 class QAction;
 
+class QGraphicsSimpleTextItem;
+
 class QHBoxLayout;
 
 namespace Tevian
@@ -117,7 +119,7 @@ namespace Tevian
 			
 			Controls* m_controls;
 			
-			QStaticText m_demographics;
+			QGraphicsSimpleTextItem* m_demographicsText;
 			bool draw;
 		};
 	}// namespace Gui

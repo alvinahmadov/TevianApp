@@ -52,18 +52,12 @@ namespace Tevian
 			layout()->addWidget(m_dialogButtonBox);
 		}
 		
-		PreferenceDialog::~PreferenceDialog()
-		{
-		}
-		
 		void PreferenceDialog::loginPanel()
 		{
 			m_loginPanel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 			auto loginBox = new QGroupBox("Login", m_loginPanel);
-			// auto apiBox = new QGroupBox("Server", m_loginPanel);
 			
 			loginBox->setFixedWidth(width());
-			// apiBox->setFixedWidth(width());
 			
 			auto loginLayout = new QHBoxLayout();
 			loginLayout->setObjectName("loginLayout");
@@ -140,8 +134,17 @@ namespace Tevian
 			inputLayout->addRow(pathLabel, pathInput);
 			
 			// Default/Placeholder values
-			backendUrlInput->setText(g_settingsManager->email());
-			pathInput->setText(g_settingsManager->password());
+			backendUrlInput->setText(g_settingsManager->url());
+			pathInput->setText(g_settingsManager->path());
+			
+			connect(backendUrlInput, SIGNAL(textEdited(
+					                                const QString&)),
+			        g_settingsManager, SLOT(setBackendUrl(
+					                                const QString&)));
+			connect(pathInput, SIGNAL(textEdited(
+					                          const QString&)),
+			        g_settingsManager, SLOT(setApiPath(
+					                                const QString&)));
 			
 			// Finishing
 			apiLayout->addLayout(inputLayout);

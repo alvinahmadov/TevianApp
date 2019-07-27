@@ -33,7 +33,9 @@ namespace Tevian
 		{
 		Q_OBJECT
 		public:
-			Controls(QWidget* parent, DetectionRenderer* renderer, Client::FaceApi* detector);
+			Controls(QWidget* parent, DetectionRenderer* renderer);
+			
+			QColor currentColor() const;
 		
 		signals:
 			
@@ -57,6 +59,8 @@ namespace Tevian
 			void initDataGroup(QWidget* parent);
 			
 			void initStyleGroup(QWidget* parent, DetectionRenderer* renderer);
+			
+			void initColorGroup(QWidget* parent);
 		
 		private slots:
 			
@@ -90,9 +94,9 @@ namespace Tevian
 			
 			QGroupBox* m_dataGroup;
 			
-			QGroupBox* m_dataOptionsGroup;
+			QGroupBox* m_colorGroup;
 			
-			QGroupBox* m_pathModeGroup;
+			QColor m_color;
 			
 			QPushButton* m_okButton;
 			

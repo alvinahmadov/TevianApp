@@ -21,10 +21,9 @@
 #include <QGraphicsLayout>
 #include <QApplication>
 #include <QMessageBox>
-
+#include <QGraphicsTextItem>
 #include <QDebug>
-#include <QGraphicsGridLayout>
-#include <QGraphicsLinearLayout>
+#include <QGraphicsSimpleTextItem>
 
 
 namespace Tevian
@@ -42,15 +41,14 @@ namespace Tevian
 				  m_scene { new QGraphicsScene(this) }
 		{
 			setVisible(false);
-			auto faceApi = new Client::FaceApi(TBACKEND, API_PATH);
+			auto faceApi = new Client::FaceApi(g_settingsManager->url(), g_settingsManager->path());
 			m_faceDetector = new FaceDetector(m_file, faceApi);
 			QImageReader reader(m_file);
 			reader.setAutoTransform(true);
 			auto image = new QImage(reader.read());
 			m_faceDetector->setParent(this);
 			m_renderer = new DetectionRenderer(image);
-			m_controls = new Controls(this, m_renderer, faceApi);
-			
+			m_controls = new Controls(this, m_renderer);
 			init();
 		}
 		
@@ -60,6 +58,7 @@ namespace Tevian
 			delete m_renderer;
 			delete m_controls;
 			delete m_topLayout;
+			delete m_demographicsText;
 		}
 		
 		void ImageViewTab::zoomImage(float factor)
@@ -74,7 +73,9 @@ namespace Tevian
 		{
 			m_topLayout = new QGridLayout(this);
 			m_widgetLayout = new QHBoxLayout();
+			m_demographicsText = new QGraphicsSimpleTextItem();
 			m_scene->addWidget(m_renderer);
+			m_scene->addItem(m_demographicsText);
 			m_view->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
 			m_view->setBackgroundRole(QPalette::ColorRole::Dark);
 			m_view->setScene(m_scene);
@@ -198,8 +199,24 @@ namespace Tevian
 				m_faceDetector->run();
 				m_renderer->setPoints(m_faceDetector->getLandmarks());
 				m_renderer->setBox(m_faceDetector->getBox());
-				m_renderer->setDemographics(m_faceDetector->getDemographics());
-				m_demographics.setText(m_faceDetector->getDemographics().getEthnicity());
+				m_demographicsText->setText(m_faceDetector->getDemographics().getAsText());
+				
+				if (!m_faceDetector->getLandmarks().isEmpty())
+				{
+					auto coordinates = Math::minmax4D(m_faceDetector->getLandmarks());
+					m_demographicsText->setScale(0.5);
+					m_demographicsText->setPen(QPen(m_controls->currentColor()));
+					m_demographicsText->setPos(
+							coordinates.first().x(),
+							coordinates.first().y() - 50
+					);
+				} else
+				{
+					m_demographicsText->setScale(2);
+					m_demographicsText->setText("Undefined");
+					m_demographicsText->setPos(m_renderer->center());
+				}
+				m_demographicsText->show();
 			} else
 			{
 				m_renderer->update();
@@ -209,6 +226,8 @@ namespace Tevian
 		void ImageViewTab::reset(bool reset)
 		{
 			m_renderer->clear(reset);
+			m_demographicsText->setPen(Qt::NoPen);
+			m_demographicsText->hide();
 		}
 		
 	}// namespace Gui

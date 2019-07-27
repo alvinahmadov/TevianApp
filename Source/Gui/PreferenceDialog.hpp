@@ -32,8 +32,6 @@ namespace Tevian
 		public:
 			PreferenceDialog(QWidget* parent, const QString& title = QString("Preferences"));
 			
-			~PreferenceDialog();
-			
 			void loginPanel();
 			
 			void serverPanel();

@@ -4,88 +4,33 @@
  */
 
 #include "FaceDetector.hpp"
-#include <QtGui/QMatrix>
+#include <QMatrix>
+#include <QMessageBox>
 
 
 namespace Tevian
 {
 	using Client::FaceApi;
-	using Details::Ethnicity;
-	using Details::Gender;
 	
 	Details::Demographics::Demographics(qreal mean, qreal variance,
-	                                    Gender gender, Ethnicity ethnicity) Q_DECL_NOEXCEPT
-			: _ethnicity { ethnicity },
-			  _gender { gender }
+	                                    QString gender, QString ethnicity) Q_DECL_NOEXCEPT
+			: _ethnicity { gender },
+			  _gender { ethnicity },
+			  _age(Age(mean, variance))
 	{
 		++_id;
-		_age.mean = mean;
-		_age.variance = variance;
 	}
 	
 	quint16 Details::Demographics::_id = 0;
 	
-	QString Details::ethnicityToStr(Ethnicity ethnicity)
+	QString Details::Demographics::getAsText() const
 	{
-		switch (ethnicity)
-		{
-			case Ethnicity::Caucasian : return "caucasian";
-			case Ethnicity::EastAsian : return "east_indian";
-			case Ethnicity::Mongoloid : return "asian";
-			case Ethnicity::Negroid : return "black";
-			case Ethnicity::Unknown : return "unknown";
-		}
-	}
-	
-	QString Details::genderToStr(Gender gender)
-	{
-		switch (gender)
-		{
-			case Gender::Male : return "male";
-			case Gender::Female : return "female";
-			case Gender::Unknown:
-			default: return "unknown";
-		}
-	}
-	
-	Ethnicity Details::stringToEthnicity(QString ethnicity)
-	{
-		if (ethnicity.compare("caucasian"))
-		{
-			return Ethnicity::Caucasian;
-		}
-		if (ethnicity.compare("east_indian"))
-		{
-			return Ethnicity::EastAsian;
-		}
-		if (ethnicity.compare("asian"))
-		{
-			return Ethnicity::Mongoloid;
-		}
-		if (ethnicity.compare("black"))
-		{
-			return Ethnicity::Negroid;
-		}
-		if (ethnicity.compare("unknown"))
-		{
-			return Ethnicity::Unknown;
-		}
-	}
-	
-	Gender Details::stringToGender(QString ethnicity)
-	{
-		if (ethnicity.compare("male"))
-		{
-			return Gender::Male;
-		}
-		if (ethnicity.compare("female"))
-		{
-			return Gender::Female;
-		}
-		if (ethnicity.compare("unknown"))
-		{
-			return Gender::Unknown;
-		}
+		QString info = QString("Age mean %1, \nAge variance %2, \nEthnicity %3, \nGender %4")
+				.arg(_age._mean)
+				.arg(_age._variance)
+				.arg(_ethnicity)
+				.arg(_gender);
+		return info;
 	}
 	
 	/// FaceDetector
@@ -147,7 +92,7 @@ namespace Tevian
 	}
 	
 	const QVector<QPoint>&
-	FaceDetector::getLandmarks()
+	FaceDetector::getLandmarks() const
 	{
 		return m_face.landmarks;
 	}
@@ -177,7 +122,15 @@ namespace Tevian
 			m_faceApi = api;
 		} else
 		{
-			m_faceApi = new Client::FaceApi(QString(TBACKEND), QString(API_PATH));
+			if (g_settingsManager->url().isEmpty() || g_settingsManager->path().isEmpty())
+			{
+				QMessageBox::information(reinterpret_cast<QWidget*>(this),
+				                         QString("Backend"),
+				                         QString("Please set backend and openapi.json path"),
+				                         QMessageBox::StandardButton::Ok);
+			}
+			m_faceApi = new Client::FaceApi(QString(g_settingsManager->url()),
+			                                QString(g_settingsManager->path()));
 		}
 		
 		m_faceApi->login(FaceApi::Token);
@@ -256,21 +209,18 @@ namespace Tevian
 				
 				if (item.first.compare("age") == 0)
 				{
-					//item.second.toJsonValue().toObject()
-					m_demographics._age.mean = item.second.toJsonValue().toObject().
+					m_demographics._age._mean = item.second.toJsonValue().toObject().
 							value("mean").toDouble();
-					m_demographics._age.variance = item.second.toJsonValue().toObject().
+					m_demographics._age._variance = item.second.toJsonValue().toObject().
 							value("variance").toDouble();
 				}
-				if (item.first.compare("ethcnicity") == 0)
+				if (item.first.compare("ethnicity") == 0)
 				{
-					m_demographics._ethnicity =
-							Details::stringToEthnicity(item.second.toString());
+					m_demographics._ethnicity = item.second.toString();
 				}
 				if (item.first.compare("gender") == 0)
 				{
-					m_demographics._ethnicity =
-							Details::stringToEthnicity(item.second.toString());
+					m_demographics._gender = item.second.toString();
 				}
 			}
 		}
