@@ -30,11 +30,9 @@ set_target_properties(
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
 )
 
-if(WIN32)
-    add_custom_command(
+add_custom_command(
             TARGET ${TEVIAN_GUI_LIB} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy
             $<TARGET_FILE:${TEVIAN_GUI_LIB}>
             ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-    )
-endif()
+)

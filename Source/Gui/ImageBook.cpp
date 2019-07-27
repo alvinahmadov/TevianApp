@@ -3,22 +3,13 @@
  *  Author Alvin Ahmadov <alvin.dev.ahmadov@gmail.com>
  */
 
-
-#include <memory>
-
 #include "Gui/ImageBook.hpp"
 
-#include <QException>
 #include <QDir>
-#include <QMouseEvent>
 #include <QImageReader>
-#include <QVBoxLayout>
 #include <QTabWidget>
 #include <QAction>
-#include <QDialogButtonBox>
 #include <QTabBar>
-#include <QMessageBox>
-#include <QPushButton>
 
 
 namespace Tevian
@@ -36,8 +27,8 @@ namespace Tevian
 		{
 			auto tab = new ImageViewTab(file, this);
 			
-			tabBar()->setCurrentIndex(count() - 1);
-			addTab(tab, file.split(QDir::separator()).back());
+			auto current = addTab(tab, file.split(QDir::separator()).back());
+			tabBar()->setCurrentIndex(current);
 			return true;
 		}
 		
@@ -47,7 +38,7 @@ namespace Tevian
 			{
 				removeTab(tabBar()->currentIndex());
 				return true;
-			} catch (QException& e)
+			} catch (...)
 			{
 				
 			}
@@ -56,12 +47,6 @@ namespace Tevian
 		
 		void ImageBook::init()
 		{
-			// m_controls = new Controls()
-			//
-			// m_topLayout = new QGridLayout(this);
-			// m_widgetLayout = new QHBoxLayout();
-			// m_topLayout->addItem(m_widgetLayout, 1, 0);
-			
 			setTabsClosable(true);
 			tabBar()->setMovable(true);
 			tabBar()->setShape(QTabBar::RoundedNorth);
@@ -75,7 +60,6 @@ namespace Tevian
 			
 			connect(closeAct, SIGNAL(triggered(bool)), this, SLOT(closeTab()));
 			connect(tabBar(), &QTabBar::tabCloseRequested, this, &ImageBook::closeTab);
-			// setLayout(m_topLayout);
 		}
 		
 		void ImageBook::showWidgets()

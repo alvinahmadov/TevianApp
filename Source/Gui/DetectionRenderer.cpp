@@ -14,16 +14,6 @@ namespace Tevian
 {
 	namespace Gui
 	{
-		void drawLandmarkPath()
-		{
-		
-		}
-		
-		void drawBboxPath()
-		{
-		
-		}
-		
 		DetectionRenderer::DetectionRenderer(QImage* image, QWidget* parent, Qt::WindowFlags flags)
 				: RenderWidget(image, parent),
 				  m_label { Label() },
@@ -243,7 +233,6 @@ namespace Tevian
 			{
 				drawLandmarks(painter);
 				drawBox(painter);
-				clearText();
 			}
 		}
 	}

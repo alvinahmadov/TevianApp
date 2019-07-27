@@ -10,7 +10,6 @@
 #include "Gui/ViewPort.hpp"
 
 #include <QImage>
-#include <QStaticText>
 
 
 class QPainter;
@@ -44,10 +43,6 @@ namespace Tevian
 			
 			QSize sizeHint();
 			
-			void setStaticText(QString text);
-			
-			void clearText();
-			
 			/**
 			 * \brief Virtual painting function.
 			 *
@@ -78,8 +73,6 @@ namespace Tevian
 			QPoint m_mousePos;
 			
 			std::unique_ptr<QImage> m_image;
-			
-			QStaticText m_staticText;
 		};
 	}// namespace Gui
 }// namespace Tevian

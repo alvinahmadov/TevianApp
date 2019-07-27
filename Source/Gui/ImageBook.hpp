@@ -51,13 +51,6 @@ namespace Tevian
 		
 		private:
 			void init();
-			
-			// private:
-			// 	Controls* m_controls;
-			//
-			// 	QGridLayout* m_topLayout;
-			//
-			// 	QHBoxLayout* m_widgetLayout;
 		
 		};
 	}// namespace Gui
