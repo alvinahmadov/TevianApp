@@ -26,7 +26,7 @@ namespace Tevian
 		{
 		Q_OBJECT
 		public:
-			Window(bool enable_statusbar = true);
+			Window(bool enable_statusbar = false);
 			
 			~Window() Q_DECL_OVERRIDE;
 			

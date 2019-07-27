@@ -8,7 +8,6 @@
 
 #include <QPainter>
 #include <QMouseEvent>
-#include <QStaticText>
 
 namespace Tevian
 {
@@ -16,7 +15,6 @@ namespace Tevian
 	{
 		DetectionRenderer::DetectionRenderer(QImage* image, QWidget* parent, Qt::WindowFlags flags)
 				: RenderWidget(image, parent),
-				  m_label { Label() },
 				  m_clear { false }
 		{
 			setWindowFlags(flags);

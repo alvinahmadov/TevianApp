@@ -40,9 +40,8 @@ namespace Tevian
 				return true;
 			} catch (...)
 			{
-				
+				return false;
 			}
-			return false;
 		}
 		
 		void ImageBook::init()

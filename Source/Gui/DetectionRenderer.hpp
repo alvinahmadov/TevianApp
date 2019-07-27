@@ -45,7 +45,7 @@ namespace Tevian
 			 * */
 			enum PathMode
 			{
-				CurveMode, LineMode, QuadMode
+				CurveMode, LineMode
 			};
 			
 			using Label = std::unordered_map<std::string, QVariant>;
@@ -118,8 +118,6 @@ namespace Tevian
 			 * */
 			void drawBox(QPainter* painter);
 			
-			void drawLabel(QPainter* painter);
-			
 			/**
 			 * \brief Draws ponts
 			 * */
@@ -140,8 +138,6 @@ namespace Tevian
 			std::array<int, 4> m_bbox1;
 			
 			std::array<int, 4> m_bbox2;
-			
-			Label m_label;
 			
 			int m_currentPoint;
 			
