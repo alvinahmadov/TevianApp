@@ -70,21 +70,16 @@ namespace Tevian
 			auto emailInput = new QLineEdit(loginBox);
 			auto passwordLabel = new QLabel(tr("Password: "), loginBox);
 			auto passwordInput = new QLineEdit(loginBox);
-			auto tokenLabel = new QLabel(tr("Token: "), loginBox);
-			auto tokenInput = new QLineEdit(loginBox);
 			
 			// Echo modes
 			passwordInput->setEchoMode(QLineEdit::EchoMode::Password);
-			tokenInput->setEchoMode(QLineEdit::EchoMode::Password);
 			
 			inputLayout->addRow(emailLabel, emailInput);
 			inputLayout->addRow(passwordLabel, passwordInput);
-			inputLayout->addRow(tokenLabel, tokenInput);
 			
 			// Default/Placeholder values
 			emailInput->setText(g_settingsManager->email());
 			passwordInput->setText(g_settingsManager->password());
-			tokenInput->setPlaceholderText("Optional");
 			
 			// auto apiLayout = new Q
 			
@@ -97,11 +92,6 @@ namespace Tevian
 			connect(passwordInput, SIGNAL(textEdited(
 					                              const QString&)),
 			        g_settingsManager, SLOT(setPassword(
-					                                const QString&)));
-			
-			connect(tokenInput, SIGNAL(textEdited(
-					                           const QString&)),
-			        g_settingsManager, SLOT(setToken(
 					                                const QString&)));
 			
 			// Finishing
@@ -162,6 +152,3 @@ namespace Tevian
 		
 	}// namespace Gui
 }// namespace Tevian
-
-
-#include <moc_PreferenceDialog.cpp>

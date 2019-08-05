@@ -68,5 +68,3 @@ namespace Tevian
 		
 	}// namespace Gui
 }// namespace Tevian
-
-#include <Gui/moc_ImageBook.cpp>

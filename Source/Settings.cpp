@@ -191,6 +191,3 @@ namespace Tevian
 	}
 	
 }
-
-
-#include <moc_Settings.cpp>

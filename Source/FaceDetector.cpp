@@ -25,7 +25,7 @@ namespace Tevian
 	
 	QString Details::Demographics::getAsText() const
 	{
-		QString info = QString("Age mean %1, \nAge variance %2, \nEthnicity %3, \nGender %4")
+		QString info = QString("Age mean: %1 \nAge variance: %2 \nEthnicity: %3 \nGender: %4")
 				.arg(_age._mean)
 				.arg(_age._variance)
 				.arg(_ethnicity)
@@ -91,7 +91,7 @@ namespace Tevian
 		return;
 	}
 	
-	const QVector<QPoint>&
+	const QVector<QPointF>&
 	FaceDetector::getLandmarks() const
 	{
 		return m_face.landmarks;
@@ -133,7 +133,7 @@ namespace Tevian
 			                                QString(g_settingsManager->path()));
 		}
 		
-		m_faceApi->login(FaceApi::Token);
+		m_faceApi->login(g_settingsManager->email(), g_settingsManager->password(), "Bearer");
 		m_faceApi->setParent(this);
 		m_fetched = false;
 	}
@@ -193,7 +193,7 @@ namespace Tevian
 				x = xiter->second.toInt(),
 						y = yiter->second.toInt();
 				
-				m_face.landmarks.push_back(QPoint(x, y));
+				m_face.landmarks.push_back(QPointF(x, y));
 			}
 		}
 	}
@@ -330,6 +330,3 @@ namespace Tevian
 		return objectData;
 	}
 }
-
-
-#include <moc_FaceDetector.cpp>

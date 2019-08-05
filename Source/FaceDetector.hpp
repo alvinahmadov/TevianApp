@@ -42,7 +42,7 @@ namespace Tevian
 			FaceData::face_array face_bounds;
 			
 			//! Vector of face points
-			QVector<QPoint> landmarks;
+			QVector<QPointF> landmarks;
 			
 			FaceParameters() = default;
 		};
@@ -154,7 +154,7 @@ namespace Tevian
 		 * \note May return empty data, if option
 		 * landmarks disabled or fetch not called first.
 		 * */
-		const QVector<QPoint>&
+		const QVector<QPointF>&
 		getLandmarks() const;
 		
 		const std::array<int, 4>&

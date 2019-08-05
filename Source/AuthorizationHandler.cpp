@@ -5,6 +5,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QDebug>
 #include <QJsonDocument>
 #include "AuthorizationHandler.hpp"
 #include <chrono>
@@ -39,31 +40,6 @@ namespace Tevian
 		}
 		
 		AuthorizationHandler&
-		AuthorizationHandler::login(LoginType loginType, QString authType)
-		{
-			if (loginType == LoginType::Token)
-			{
-				if (!g_settingsManager->token().isEmpty())
-				{
-					return login(g_settingsManager->token(), authType);
-				} else
-				{
-					return login(LoginType::Account);
-				}
-			}
-			if (loginType == LoginType::Account)
-			{
-				if (!g_settingsManager->email().isEmpty() &&
-				    !g_settingsManager->password().isEmpty())
-				{
-					return login(g_settingsManager->email(), g_settingsManager->password(), authType);
-				} else
-					qWarning() << "Email or/and passwords are empty.";
-			}
-			return *this;
-		}
-		
-		AuthorizationHandler&
 		AuthorizationHandler::login(const QString& email, const QString& password, QString authType)
 		{
 			if (!m_loggedIn)
@@ -88,34 +64,16 @@ namespace Tevian
 				m_authenticator->setType(authType);
 				m_authenticator->setToken(_token.toLocal8Bit());
 				
-				if (m_token.isEmpty())
-				{
-					m_token = m_authenticator->token();
-					m_token.prepend(' ').prepend(m_authenticator->type().toLocal8Bit());
-				}
+				if (!m_token.isEmpty())
+					m_token.clear();
+				
+				m_token = m_authenticator->token();
+				m_token.prepend(' ').prepend(m_authenticator->type().toLocal8Bit());
+				
 				if (g_settingsManager->token().isEmpty())
 				{
-					g_settingsManager->setToken(m_token);
-				}
-				
-				setRequiresAuth(true);
-				m_loggedIn = true;
-			}
-			return *this;
-		}
-		
-		AuthorizationHandler&
-		AuthorizationHandler::login(const QByteArray& token, QString authType)
-		{
-			if (!m_loggedIn)
-			{
-				m_authenticator->setType(authType);
-				m_authenticator->setToken(token);
-				
-				if (m_token.isEmpty())
-				{
-					m_token = m_authenticator->token();
-					m_token.prepend(' ').prepend(m_authenticator->type().toLocal8Bit());
+					if (!g_settingsManager->token().toStdString().compare(m_token.toStdString()))
+						g_settingsManager->setToken(m_token);
 				}
 				
 				setRequiresAuth(true);
@@ -180,5 +138,3 @@ namespace Tevian
 		}
 	}// namespace Client
 }// namespace Tevian
-
-#include <moc_AuthorizationHandler.cpp>

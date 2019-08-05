@@ -287,5 +287,3 @@ namespace Tevian
 		
 	}// namespace Gui
 }// namespace Tevian
-
-#include <moc_Controls.cpp>

@@ -46,11 +46,6 @@ namespace Tevian
 		{
 		Q_OBJECT
 		public:
-			enum LoginType
-			{
-				Account,
-				Token
-			};
 			
 			/**
 			 * ctor
@@ -77,9 +72,6 @@ namespace Tevian
 			 * */
 			void setRequiresAuth(bool);
 			
-			AuthorizationHandler&
-			login(LoginType loginType, QString authType = QString("Bearer"));
-			
 			/**
 			 * \brief Sends login request to the server.
 			 *
@@ -89,9 +81,6 @@ namespace Tevian
 			 * */
 			AuthorizationHandler&
 			login(const QString& email, const QString& password, QString authType = QString("Bearer"));
-			
-			AuthorizationHandler&
-			login(const QByteArray& token, QString authType);
 			
 			QByteArray
 			getToken() const;

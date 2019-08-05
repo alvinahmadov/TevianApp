@@ -384,5 +384,3 @@ namespace Tevian
 		
 	}// namespace Client
 }// namespace Tevian
-
-#include <moc_FaceApi.cpp>

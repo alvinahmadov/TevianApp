@@ -28,37 +28,12 @@ namespace Tevian
 				painter->setPen(Qt::NoPen);
 				path.moveTo(m_bounds.at(0));
 				
-				if (m_pathMode == LineMode)
+				for (int i = 1; i < m_bounds.size(); ++i)
 				{
-					for (int i = 1; i < m_bounds.size(); ++i)
-						path.lineTo(m_bounds.at(i));
-				} else if (m_pathMode == CurveMode)
-				{
-					int i = 1;
-					while (i + 2 < m_bounds.size())
-					{
-						path.cubicTo(m_bounds.at(i), m_bounds.at(i + 1), m_bounds.at(i + 2));
-						i += 3;
-					}
-					while (i < m_bounds.size())
-					{
-						path.lineTo(m_bounds.at(i));
-						++i;
-					}
-				} else
-				{
-					int i = 1;
-					while (i + 2 < m_bounds.size())
-					{
-						path.quadTo(m_bounds.at(i), m_bounds.at(i + 1));
-						i += 2;
-					}
-					while (i < m_bounds.size())
-					{
-						path.lineTo(m_bounds.at(i));
-						++i;
-					}
+					path.lineTo(m_bounds.at(i));
 				}
+				
+				
 				// Draw the getPath
 				QColor lineColor = Qt::blue;
 				
@@ -72,12 +47,9 @@ namespace Tevian
 					
 					QVector<qreal> dashes;
 					qreal space = 4;
-					dashes << 1 << space
-					       << 3 << space
-					       << 9 << space
-					       << 27 << space
-					       << 9 << space
-					       << 3 << space;
+					dashes << 1 << space << 3 << space
+					       << 9 << space << 27 << space
+					       << 9 << space << 3 << space;
 					stroker.setDashPattern(dashes);
 					QPainterPath stroke = stroker.createStroke(path);
 					painter->fillPath(stroke, lineColor);
@@ -101,7 +73,7 @@ namespace Tevian
 				painter->drawPoints(m_points);
 				for (int i = 0; i < m_points.size(); ++i)
 				{
-					QPoint pos = m_points.at(i);
+					QPointF pos = m_points.at(i);
 					painter->drawEllipse(pos.x(), pos.y(),
 					                     m_pointSize, m_pointSize);
 				}
@@ -135,7 +107,7 @@ namespace Tevian
 			m_penWidth = penWidth;
 		}
 		
-		void DetectionRenderer::setPoints(const QVector<QPoint>& points)
+		void DetectionRenderer::setPoints(const QVector<QPointF>& points)
 		{
 			if (!points.empty())
 			{
@@ -235,6 +207,3 @@ namespace Tevian
 		}
 	}
 }
-
-
-#include <Gui/moc_DetectionRenderer.cpp>

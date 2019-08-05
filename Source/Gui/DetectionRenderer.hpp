@@ -65,7 +65,7 @@ namespace Tevian
 			
 			void setRealPenWidth(qreal penWidth);
 			
-			void setPoints(const QVector<QPoint>& points);
+			void setPoints(const QVector<QPointF>& points);
 			
 			void setBox(const std::array<int, 4>& bbox);
 			
@@ -125,7 +125,7 @@ namespace Tevian
 		
 		private:
 			
-			QVector<QPoint> m_bounds;
+			QVector<QPointF> m_bounds;
 			
 			PathMode m_pathMode;
 			
@@ -141,7 +141,7 @@ namespace Tevian
 			
 			int m_currentPoint;
 			
-			QVector<QPoint> m_points;
+			QVector<QPointF> m_points;
 			
 			QRect m_boundingBox;
 			

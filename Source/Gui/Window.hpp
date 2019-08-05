@@ -12,7 +12,7 @@
 
 #include <QMainWindow>
 #include <QMap>
-#include <QtWidgets/QProgressBar>
+#include <QProgressBar>
 
 
 class QAction;

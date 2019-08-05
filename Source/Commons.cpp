@@ -34,17 +34,44 @@ namespace Tevian
 			
 		}
 		
-		QVector<QPoint>
-		minmax4D(const QVector<QPoint>& points)
+		QPointF& operator-=(QPointF& p, int i)
+		{
+			p.setX(p.x() - i);
+			p.setY(p.y() - i);
+			return p;
+		}
+		
+		QPointF& operator-=(QPointF& p, float f)
+		{
+			p.setX(p.x() - f);
+			p.setY(p.y() - f);
+			return p;
+		}
+		
+		QPointF& operator+=(QPointF& p, int i)
+		{
+			p.setX(p.x() + i);
+			p.setY(p.y() + i);
+			return p;
+		}
+		
+		QPointF& operator+=(QPointF& p, float f)
+		{
+			p.setX(p.x() + f);
+			p.setY(p.y() + f);
+			return p;
+		}
+		
+		QVector<QPointF>
+		minmax4D(const QVector<QPointF>& points)
 		{
 			auto start = points.at(points.size() - 1);
-			
 			// Vertical and horizontal limits (y0 -> ymax and x0 -> xmax)
-			QPoint vMin = start, vMax = start,
+			QPointF vMin = start, vMax = start,
 					hMin = start, hMax = start;
-			QVector<QPoint> range { };
+			QVector<QPointF> range { };
 			
-			auto minmaxPoint = [ & ](const QPoint& p1, const QPoint p2)
+			auto minmaxPoint = [ & ](const QPointF& p1, const QPointF p2)
 			{
 				// Test for x
 				if (p1.x() > p2.x())
@@ -72,14 +99,14 @@ namespace Tevian
 				minmaxPoint(points.at(i), points.at(i + 1));
 			}
 			
-			range.push_back(QPoint(hMin.x(), vMin.y()));    // topleft
-			range.push_back(QPoint(hMax.x(), vMin.y()));    // topright
-			range.push_back(QPoint(hMax.x(), vMin.y()));    // bottomright
-			range.push_back(QPoint(hMax.x(), vMax.y()));    // bottomleft
-			range.push_back(QPoint(hMax.x(), vMax.y()));    // topleft
-			range.push_back(QPoint(hMin.x(), vMax.y()));
-			range.push_back(QPoint(hMin.x(), vMax.y()));
-			range.push_back(QPoint(hMin.x(), vMin.y()));
+			range.push_back(QPointF(hMin.x(), vMin.y()));    // topleft
+			range.push_back(QPointF(hMax.x(), vMin.y()));    // topright
+			range.push_back(QPointF(hMax.x(), vMin.y()));    // bottomright
+			range.push_back(QPointF(hMax.x(), vMax.y()));    // bottomleft
+			range.push_back(QPointF(hMax.x(), vMax.y()));    // topleft
+			range.push_back(QPointF(hMin.x(), vMax.y()));
+			range.push_back(QPointF(hMin.x(), vMax.y()));
+			range.push_back(QPointF(hMin.x(), vMin.y()));
 			
 			return range;
 		}

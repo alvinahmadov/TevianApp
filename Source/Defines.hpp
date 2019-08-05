@@ -138,6 +138,4 @@
 #define SAFE_DELETE(p)  if(p) delete p;
 #endif
 
-#define MOC_SOURCE(filename) <moc_##filename.cpp>
-
 #endif  //DEF_BASE_DETAILED_EXCEPTION
