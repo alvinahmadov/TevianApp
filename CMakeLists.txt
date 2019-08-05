@@ -9,9 +9,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 
-add_definitions(${Qt5Widgets_DEFINITIONS})
-
 set(POSITION_INDEPENDENT_CODE ON)
+
 # Globally enable automoc
 # Automoc needs to find an include of <moc_(file).cpp> in <file.cpp>
 set(CMAKE_AUTOMOC ON)
@@ -34,7 +33,7 @@ if(WIN32)
     set(CXX_FLAGS_RELEASE "-O2 -W2")
     # On windows target exe file needs to be build as Windows' native executable
     set(NATIVE WIN32)
-elseif(UNIX)
+else()
     set(CXX_FLAGS "-Wno-return-type -Wno-ignored-qualifiers -Wno-delete-non-virtual-dtor")
     set(CXX_FLAGS_DEBUG "-Wall -Wextra -g -O0 ")
     set(CXX_FLAGS_RELEASE "-O3 -ffp-contract=off -fno-expensive-optimizations -march=native")

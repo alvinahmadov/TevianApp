@@ -1,0 +1,33 @@
+{
+    "environments": [
+        {
+            "OS_NAME": "Windows"
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Debug-x64",
+            "generator": "Ninja",
+            "configurationType": "Debug",
+            "inheritEnvironments": [
+                "msvc_x64_x64"
+            ],
+            "buildRoot": "${projectDir}\\Build\\${env.OS_NAME}\\${name}",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "-v",
+            "ctestCommandArgs": ""
+        },
+        {
+            "name": "Release-x64",
+            "generator": "Ninja",
+            "configurationType": "Release",
+            "inheritEnvironments": [
+                "msvc_x64_x64"
+            ],
+            "buildRoot": "${projectDir}\\Build\\${env.OS_NAME}\\${name}",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "-v",
+            "ctestCommandArgs": ""
+        }
+    ]
+}

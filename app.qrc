@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>Resources/images/line_dash_dot.png</file>
+    <file>Resources/images/line_dash_dot_dot.png</file>
+    <file>Resources/images/line_dashed.png</file>
+    <file>Resources/images/line_dotted.png</file>
+    <file>Resources/images/line_solid.png</file>
+</qresource>
+</RCC>
+
+
+
